@@ -1,0 +1,318 @@
+* {box-sizing: border-box;}
+* {-webkit-backface-visibility: hidden;}
+body {width: 100vw; height: 100vh; overflow: hidden;}
+
+canvas {position: relative;border:5px solid white; margin: 10px auto; padding: 0;}
+canvas {display: inline-block; vertical-align: top;}
+canvas {border-right-width: 2.5px;}
+canvas#player2_field {-webkit-transform:rotate(-180deg); transform:rotate(-180deg);}
+
+/* game and other general settings */
+#game, .screen, .screenContent, .submenu {-webkit-transition: all 0.5s linear;transition: all 0.5s linear; z-index: 0;}
+#game {position:relative;width: 100%;height:100%;background-attachment:fixed; background-size:cover; background-position: 0 0; overflow:hidden;}
+#game {background: url('../images/planet.png') no-repeat center top, url("../images/starbackground_trans.png") repeat left top; background-size: 90%, 100%; background-color: #07051a;}
+#game.background_move {background-position: left top; background-size: 50%;}
+
+button {outline: 0;}
+audio {display: none; position: absolute; top: 0; left: 0; z-index: -10;}
+
+.topbar {position: absolute;top: 0;left: 0;width: 100%;padding: 20px 100px;text-align: right; z-index: 2;}
+.gameScreen.active ~ .topbar {z-index: 0;}
+.topbar input {display: none;}
+.topbar label div {position: relative;display: inline-block;width: 120px;height: 120px;background-size: contain;background-repeat: no-repeat;}
+.topbar input:checked + label div {background-image: url('../images/on.png');}
+.topbar input:not(checked) + label div {background-image: url('../images/off.png');}
+
+
+
+/* screens - general*/
+.screen {position:absolute; width:100%;height:100%; overflow:auto; background-size:cover; background-repeat: no-repeat; text-align: center; padding: 150px 0; overflow: hidden; z-index: 0; visibility:hidden; opacity: 0;}
+.screen.active{overflow: auto; z-index: 2; visibility: visible; opacity: 1;}
+.screen:before, .submenu:after {content: ''; display: inline-block; height: 100%; vertical-align: middle; margin-right: -0.25em;} /*centering attempt*/
+.screen.active .screenContent {-webkit-transform: scale(1); transform: scale(1);}
+.screenContent {display: inline-block; vertical-align: middle; text-align: left;} /*centering attempt*/
+.screenContent {width:90%; padding: 200px 20px 20px; max-width: 600px; -webkit-transform:scale(1.1); transform:scale(1.1); font-size:45px; font-family: dpcomic, bit, sans-serif; color:#f3ffb6/*#663A00*/;}
+.screenContent p {text-align: justify; margin-bottom: 1em;}
+
+
+
+/* screens - specific */
+.screen.startScreen {background-image: url(""); background-size: auto 80%; background-position: 100% 0%;}
+.screen.startScreen h1 img {width: 100%; margin-top: 100px;}
+
+.screen.gameScreen {background-color: #07051a; z-index:1;}
+.screen.gameScreen.active {overflow: hidden;}
+.gameScreen div.field {display:block; width: 100%;  position:absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); text-align: center;}
+.gameScreen #start {background-color: #07051a;}
+
+.gameScreen .labels {position:absolute; width: 100%; z-index: 1; top:50%; left:50%; -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%); outline:none;}
+.gameOverLabel {display: none; color: rgb(243, 255, 182); font-size: 80px; line-height: 1.4; font-family: bit, sans-serif;}
+.gameOverLabel h4 {font-size: 60px;}
+
+.submenu {position: relative; top: -100%; /*display:none;*/ visibility: hidden; opacity: 0; pointer-events: none; width: 90%; height:calc(100% - 300px); margin: 150px auto; z-index: 1;border: 4px solid #556600; border-radius: 15px;background-attachment:fixed;background-size:cover;}
+.submenu {background: #07051a url("../images/starbackground_trans.png") repeat left top;}
+.submenu .screenContent {padding: 20px;}
+.submenu.active {/*display:block;*/visibility: visible; opacity: 1; pointer-events: initial;}
+.submenu.player1 {-webkit-transform: rotate(0); transform: rotate(0);}
+.submenu.player2 {-webkit-transform: rotate(180); transform: rotate(180);}
+
+.screen.settingsScreen h2 {text-align: right; font-size: 70px; padding-bottom: 10px; margin-bottom: 20px; border-bottom: 3px solid white;}
+.screen.settingsScreen h2:last-of-type {margin-top: 30px;}
+
+
+/* menus and buttons */
+.menuGroup-btn button, #start {display: block; width: 100%; padding: 25px 5px; margin: 40px auto; text-align:center; font-size:45px; font-family: dpcomic, bit, sans-serif; color:rgb(243, 255, 182);
+background: transparent;
+border: 30px solid #556600;
+-webkit-border-image: url(../images/patterns/classic_solid2.png) 30 round; /* Safari 3.1-5 */
+-o-border-image: url(../images/patterns/classic_solid2.png) 30 round; /* Opera 11-12.1 */
+border-image: url(../images/patterns/classic_solid2.png) 30 round;
+}
+
+#start {width: 60%;}
+
+.menuGroup-btn button:active, #start:active{
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.menuGroup-btn button .message {
+	display: none;
+}
+
+.menuGroup-btn button.show-message .message {
+	display: block;
+}
+
+.menuGroup-btn button.locked::before {
+	content: '\1F512 ';
+	font-size: 45px;
+	display: inline;
+}
+
+/*media*/
+@media screen and (max-height: 800px) {
+	.menuGroup-btn button {font-size: 35px; padding: 15px; margin: 20px;}
+}
+	
+/* designer screen */
+.designerScreen.textTop:before {
+	display: none;
+}
+
+.designer {
+	display: none;
+}
+
+.designer.visible {
+	display: block;
+}
+
+.designerScreen .important {
+	color: #f46242;
+}
+
+.designer .designer-message {
+	color: #f46242;
+	overflow: hidden;
+	text-align: center;
+	max-height: 0;
+	
+	transition: max-height 0.5s linear;
+}
+
+.designer .designer-message.show {
+	max-height: 150px;
+}
+
+.designer .buttons {
+	text-align: left;
+}
+
+.designer button {
+	color: white;
+	background: transparent;
+	border: 0; outline: 0;
+	cursor: pointer;
+	width: 29%;
+	display: inline-block;
+	margin: 30px 0.8%;
+	padding: 25px 0;
+}
+
+.designer button:hover {
+	text-decoration: underline;
+}
+
+.designer .content {
+	text-align: center;
+}
+
+.designer .block {
+	display: inline-block;
+	width: 200px;
+	height: 200px;
+	margin: 10px 30px;
+}
+
+.designer .segment {
+	display: block;
+	width: 25%;
+	height: 25%;
+	float: left;
+	border: 1px solid #fff;
+	
+	cursor: pointer;
+}
+
+.designer .segment:not(:nth-child(4n)) {
+	border-right: 0;
+}
+
+.designer .segment:nth-last-child(n+5) {
+	border-bottom: 0;
+}
+
+.designer .segment:not( [data-fill='0'] ) {
+	background-color: #ee38ff;
+}
+
+/* loading screens */
+.loadingScreen {
+	background-color: #07051a;
+	
+	width: 100%; height: 100%;
+	position: absolute;
+	top:0; left:0;
+	z-index: 10;
+	
+	-webkit-transition: all 0.5s linear;
+	transition: all 0.5s linear;
+}
+
+.loadingScreen.active ~ .topbar {
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.loadingScreen .logo img {
+	width: 100%;
+	max-width: 600px;
+}
+
+.loadingScreen .loader {
+	position: relative;
+	margin: 30px auto;
+	
+	width: 150px;
+	height: 150px;
+}
+
+.loadingScreen.active .loader {
+	animation: spin 6s linear infinite;
+}
+
+.loadingScreen .wall {
+	position: absolute;
+	border-radius: 10px;
+}
+
+.loadingScreen .wall.top, .loadingScreen .wall.bottom {
+	width: 110px;
+	height: 10px;
+	
+	animation: squeeze 1.5s linear infinite;
+}
+	
+.loadingScreen .wall.right, .loadingScreen .wall.left {
+	height: 110px;
+	width: 10px;
+	
+	animation: squeeze2 1.5s linear infinite;
+}
+
+.wall.top {background-color: #e74c3c; top: 0; right: 20px;}
+.wall.right {background-color: #f9c922; right: 0; bottom: 20px;}
+.wall.bottom {background-color: #3498db; bottom: 0; left: 20px;}
+.wall.left {background-color: #42f462; left: 0; top: 20px;}
+
+.loadingScreen .text-contents h3, .loadingScreen .text-contents p {
+	text-align: center;
+}
+
+.loadingScreen .text-contents h3 {
+	font-family: bulky, sans-serif;
+	font-size: 160px;
+	
+	color: white;
+}
+
+/* show loader for adsScreen as well */
+.loadingScreen.adLoader {
+	background-color: rgba(152, 176, 28, 0.3);
+	
+	-webkit-transition: none !important;
+    transition: none !important;
+}
+
+.loadingScreen.adLoader .text-contents, .loadingScreen.adLoader .logo {
+	visibility: hidden;
+	pointer-events: none;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+	23% { -webkit-transform: rotate(0deg); }
+	25% { -webkit-transform: rotate(-90deg); }
+	
+	48% { -webkit-transform: rotate(-90deg); }
+	50% { -webkit-transform: rotate(-180deg); }
+	
+	73% { -webkit-transform: rotate(-180deg); }
+	75% { -webkit-transform: rotate(-270deg); }
+	
+	98% { -webkit-transform: rotate(-270deg); }
+    100% { -webkit-transform: rotate(-360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+	23% { transform: rotate(0deg); }
+	25% { transform: rotate(-90deg); }
+	
+	48% { transform: rotate(-90deg); }
+	50% { transform: rotate(-180deg); }
+	
+	73% { transform: rotate(-180deg); }
+	75% { transform: rotate(-270deg); }
+	
+	98% { transform: rotate(-270deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+@-webkit-keyframes squeeze {
+    0% { width: 110px; height: 10px; }
+	88% { width: 40px; height: 25px; }
+	90% { width: 110px; height: 10px; }
+	100% { width: 110px; height: 10px; }
+}
+
+@keyframes squeeze {
+    0% { width: 110px; height: 10px; }
+	88% { width: 40px; height: 25px; }
+	90% { width: 110px; height: 10px; }
+	100% { width: 110px; height: 10px; }
+}
+
+@-webkit-keyframes squeeze2 {
+    0% { height: 110px; width: 10px; }
+	83% { height: 40px; width: 25px; }
+	85% { height: 40px; width: 25px; }
+	100% { height: 110px; width: 10px; }
+}
+
+@keyframes squeeze2 {
+    0% { height: 110px; width: 10px; }
+	83% { height: 40px; width: 25px; }
+	85% { height: 40px; width: 25px; }
+	100% { height: 110px; width: 10px; }
+}

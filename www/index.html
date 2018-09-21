@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Stack X2!</title>
+	
+	<meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+	
+	<link rel="shortcut icon" type="image/png" href="images/logo/stack.png"/>
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="css/fonts.css" />
+	<link rel="stylesheet" type="text/css" href="css/screens.css" />
+	<link rel="stylesheet" type="text/css" href="css/checkboxes.css" />
+	<link rel="stylesheet" type="text/css" href="css/player_settings.css" />
+	<link rel="stylesheet" type="text/css" href="css/gameover_screen.css" />
+	<link rel="stylesheet" type="text/css" href="css/console.css" />
+	<style type="text/css">
+		/*test css goes here*/
+		
+	</style>
+</head>
+<body>
+
+	<div class="screen loadingScreen active">
+		<div class="screenContent">
+			<div class="logo">
+				<img alt="logo" src="images/loading/games4two_v2.png" />
+			</div>
+			<div class="loader">
+				<div class="wall top"></div>
+				<div class="wall right"></div>
+				<div class="wall bottom"></div>
+				<div class="wall left"></div>
+			</div>
+			<div class='text-contents'>
+				<p>presents</p>
+				<h3>Stack X Two</h3>
+			</div>
+		</div>
+	</div>
+
+	<div id="game">
+		<div class="screen startScreen active">
+			<div class="screenContent menuGroup-btn">
+				<h1><img src='images/logo.png' /></h1>
+				<button type="button" data-where="gameScreen" data-action="multiPlayer">Play Stack X2</button>
+				<button type="button" data-where="gameScreen" data-action="singlePlayer">Play alone</button>
+				<button type="button" data-where="instructionsScreen">Instructions</button>
+				<button type="button" data-where="settingsScreen">Settings</button>
+				<button type="button" data-where="designerScreen">Designer</button>
+				<button type="button" data-where="adsScreen">Help us by watchig some ads</button>
+				<button type="button" data-where="creditsScreen">Credits</button>
+			</div>
+		</div>
+		<div class="screen instructionsScreen">
+			<div class="screenContent menuGroup-btn">
+				<p>Stack X2 is a tile-matching puzzle video game which you can play with a friend, or by yourself.</p>
+				<p>Blocks fall down the playing field one by one in a random sequence. You take control of these by moving the falling one sideways and rotating it by 90 degree units, if you feel the need, with the aim of creating a horizontal line without gaps. When such a line is created, it gets destroyed, and any block above the deleted line will fall. The game ends when the stack reaches the top of the playing field and no new blocks are able to enter. Number of points you earn grow exponentially, the more rows you vanish at the same time.</p>
+				<p>Check out the settings area for some personalization fun and extra fine-tuning.</p>			
+				<button type="button" data-where="startScreen">Back to Main Menu</button>
+			</div>
+		</div>
+		<div class="screen settingsScreen">
+			<div class="screenContent menuGroup-btn">
+				
+				<h2>Modes</h2>
+				<input type='checkbox' id='oneWithOne' value='oneWithOne' class="css-checkbox" />
+				<label for='oneWithOne' class="css-label"><div>
+					<h3>One-With-One</h3>
+					<p>Play in your own field, but with a friend. Make sure you both complete your lines, otherwise they will not dissappear.</p>
+				</div></label>
+		
+				<input type='checkbox' id='doubleThePieces' value='doubleThePieces' class="css-checkbox" />
+				<label for='doubleThePieces' class="css-label"><div>
+					<h3>More Pieces</h3>
+					<p>Increase the number of block types that you can play with. It is a risk worth taking!</p>
+				</div></label>
+				
+				<input type='checkbox' id='speed' value='speed' class="css-checkbox" />
+				<label for='speed' class="css-label"><div>
+					<h3>Speed up</h3>
+					<p>The pieces will start falling quicker by the minute. Be careful, or the field will fill up quite quickly.</p>
+				</div></label>
+				
+				<input type='checkbox' id='customPieces' value='customPieces' class="css-checkbox" />
+				<label for='customPieces' class="css-label"><div>
+					<h3>Custom Pieces</h3>
+					<p>Make the pieces you created yourself in the Designer section available within the game. Enjoy a custom game of Stack X2.</p>
+				</div></label>
+				
+				<!--<input type='checkbox' id='singlePlayer' value='singlePlayer' class="css-checkbox" />
+				<label for='singlePlayer' class="css-label locked"><div>
+					<h3>Play alone</h3>
+					<p>An excellent chance to ramp up your skills before playing with your friends.</p>
+				</div></label>-->
+				
+				<button type="button" data-where="startScreen">Back to Main Menu</button>
+				
+			</div>
+
+		</div>
+		
+		<div class="screen designerScreen">
+			<div class="screenContent menuGroup-btn">
+				<div class='intro'>
+					<p>Designer is a simple tool that allows you to create your own custom games with game pieces of your choice.</p>
+					<p>Please create all pieces for your custom game. You would be playing only with the pieces you create.</p>
+					<p>Mininum number of pieces is 6. There is no maximum limit, but do be wise about it.</p>
+					<p><span class='important'>When you are done with creating your pieces, please go to Settings screen and enable custom game setting, so that you may use them!</span></p>	
+					<button id='designer' type='button'>Let's get started already!</button>
+				</div>
+				<div class='designer'>
+					<div class='buttons'>
+						<button id='new' type='button'>New</button>
+						<button id='delete' type='button'>Delete</button>
+						<button id='save' type='button'>Save</button>
+					</div>
+					<div class='designer-message'></div>
+					<div class='content'>
+					</div>
+				</div>
+				<button type="button" data-where="startScreen">Back to Main Menu</button>
+			</div>
+
+		</div>
+		<div class="screen adsScreen">
+			<div class="screenContent menuGroup-btn brown">
+				<p>Thank you for your help! Please check out some ads and who knows... you might even find something you like.</p>
+				<br>
+				<button type="button" data-action="prepInterstitial">Show me some full screen ads</button>
+				<!--<button type="button" data-action="prepVideo">Show me a video ad</button>-->
+				<br><br><br>
+				<button type="button" data-where="startScreen">Back to Main Menu</button>
+			</div>
+		</div>
+		<div class="screen creditsScreen">
+			<div class="screenContent menuGroup-btn">
+				<p>Background image:<br>Planet background image was found without any license information. In case the image is copyrighted to someone, please contact us to take it down.</p>
+				<p>Background music and SFX:<br>“8-Bit Puzzler” by Eric Matyas, www.soundimage.org.</p>
+				<p>Buttons:<br>Sound effects obtained from http://www.freesfx.co.uk.</p>
+				<button type="button" data-where="startScreen">Back to Main Menu</button>
+			</div>
+		</div>
+		<div class="screen gameOver">
+			<div class="screenContent">
+				<div class="summary">
+					<p class="game_text">Awesome match. Check out the stats!</p>
+					
+					<div class="general-stats">
+						<p class="time_played">Time Played: <br> <span class="result">00:00:00</span></p>
+						<p class="final_score">Final Score: <br> <span class="result">0 : 0</span></p>
+					</div>
+				</div>
+				
+				<div class="menuGroup-btn brown">
+					<!--<button type="button" data-action="toggleScoreDetails">Details</button>-->
+					<button type="button" data-where="gameScreen">Play Again</button>
+					<button type="button" data-where="startScreen">Menu</button>
+				</div>
+			</div>
+		</div>
+		<div class="screen gameScreen">
+			<div class='field'>
+				<canvas id='player1_field'>
+					<div id="unsupported">
+						Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
+					</div>
+				</canvas><canvas id='player2_field'>
+					<div id="unsupported">
+						Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
+					</div>
+				</canvas>
+			</div>
+			
+			<div class='labels'>
+				<div class='gameOverLabel'><h4>Game Over</h4><div>A real block buster!</div></div>
+				<button id='start' type="button" data-action="startGame">Start</button>
+			</div>
+			
+			<div id="player2" class="playerGroup-btn">
+				<div>
+					<button type="button" data-direction="goingLeft">LEFT</button> <!-- left -->
+					<button type="button" data-direction="goingRight">RIGHT</button> <!-- right -->
+					<button type="button" class="menu_icon" data-action="displaySubmenu"><span><span></span><span></span><span></span></span></button>
+					<button type="button" data-direction="goingDown">DOWN</button> <!-- down -->
+				</div><div>
+					<button type="button" data-direction="rotateRight">ROT R</button> <!-- rotate right -->
+					<button type="button" data-direction="rotateLeft">ROT L</button> <!-- rotate left -->
+				</div>
+			</div>
+
+			<div id="player1" class="playerGroup-btn">
+				<div>
+					<button type="button" data-direction="goingLeft">LEFT</button> <!-- left -->
+					<button type="button" data-direction="goingRight">RIGHT</button> <!-- right -->
+					<button type="button" class="menu_icon" data-action="displaySubmenu"><span><span></span><span></span><span></span></span></button>
+					<button type="button" data-direction="goingDown">DOWN</button> <!-- down -->
+				</div><div>
+					<button type="button" data-direction="rotateRight">ROT R</button> <!-- rotate right -->
+					<button type="button" data-direction="rotateLeft">ROT L</button> <!-- rotate left -->
+				</div>
+			</div>
+			
+
+			<div class="submenu">
+				<div class="screenContent menuGroup-btn">
+					<button type="button" data-action="resumeGame">Resume</button>
+					<button type="button" data-action="restartGame">Restart</button>
+					<button type="button" data-where="startScreen">Back to Main Menu</button>
+				</div>
+			</div>
+		</div>
+		<div class="topbar">
+			<input type="checkbox" name="sound" id="sound" value="on">
+			<label for="sound"><div></div></label>
+		</div>
+	</div>
+	<audio id="background_sound" loop>
+		<source src="audio/background.ogg" type="audio/ogg">
+		<source src="audio/background.mp3" type="audio/mpeg">
+	</audio>
+	<audio id="button_press">
+		<source src="audio/button.wav" type="audio/wav">
+	</audio>
+	<audio id="apple_score">
+		<source src="audio/apples.mp3" type="audio/mp3">
+	</audio>
+	
+	
+	<script type="text/javascript" src="cordova.js"></script>
+	<script src="js\ads.js"></script>
+	
+	<script src="js\utils.js"></script>
+	<script src="js\tap.js"></script>
+	
+	<script src="js\parts.js"></script>
+	<script src="js\events.js"></script>
+	<script src="js\game.js"></script>
+	<script>
+	document.body.style.width = window.innerWidth + "px";
+	document.body.style.height = window.innerHeight + "px";
+	
+	var game = new Game();
+	game.init();
+	
+	
+
+	window.onload = function() {
+		//update consoles
+		var screenH = window.innerHeight;
+		var canvasH = game.c_height;
+		var consoleH = (screenH - canvasH) / 2;
+		var consoles = document.getElementsByClassName('playerGroup-btn');
+		
+		if (consoleH > 300) {
+			document.getElementsByClassName('gameScreen')[0].classList.add('typeA');
+			Array.prototype.forEach.call(consoles, function(console){
+				console.style.height = (  consoleH - 20 ) + 'px';
+			});
+		} else {
+			document.getElementsByClassName('gameScreen')[0].classList.add('typeB');
+			Array.prototype.forEach.call(consoles, function(console){
+				console.style.height = (  consoleH - 20 ) + 'px';
+			});
+		}
+		
+		//remove loading screen
+		setTimeout(function(){
+			//goto('startScreen');
+			var loading = document.querySelector('.loadingScreen');
+			var game = document.querySelector('#game');
+			loading.classList.remove('active');
+		}, 5000);
+	}
+	
+	window.onresize = function(event) {
+		document.body.style.width = window.innerWidth + "px";
+		document.body.style.height = window.innerHeight + "px";
+	};
+	</script>
+</body>
+</html>
